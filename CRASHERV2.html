@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>UI Tema Iblis Dengan Simpan Akun</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)),
+        url('https://files.catbox.moe/ldg558.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+    }
+
+    .container {
+      background: rgba(0, 0, 0, 0.85);
+      border: 2px solid #ff0000;
+      padding: 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 30px #ff0000;
+      width: 400px;
+      text-align: center;
+      position: relative;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #ff0000;
+      text-shadow: 0 0 10px #ff0000;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      margin: 10px 0 5px;
+      color: #ff6666;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 2px solid #ff0000;
+      background: #1a0000;
+      color: #fff;
+      border-radius: 5px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #ff0000;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: 0.3s;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #cc0000;
+    }
+
+    .loading {
+      display: none;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #ff6666;
+    }
+
+    .spinner {
+      border: 4px solid #ff6666;
+      border-top: 4px solid #ff0000;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+
+    .spin {
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .welcome {
+      font-size: 20px;
+      color: #ff0000;
+      text-align: center;
+      white-space: pre-wrap;
+      border-right: 2px solid #ff0000;
+      overflow: hidden;
+    }
+
+    #masukBtn {
+      display: none;
+      margin-top: 20px;
+    }
+
+    p {
+      font-size: 18px;
+      color: #fff;
+      text-align: left;
+    }
+
+    .author {
+      margin-top: 30px;
+      font-size: 12px;
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    .error {
+      color: #ff6666;
+      font-size: 12px;
+      margin-top: -10px;
+      margin-bottom: 10px;
+      display: none;
+    }
+
+    .fakeForclose {
+      font-size: 16px;
+      color: #ff0000;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Halaman Disclaimer -->
+  <div class="container" id="disclaimer">
+    <h2>PERINGATAN!</h2>
+    <p>
+      -- Sebelum memulai hack alangkah baiknya engkau yang sedang hack harus meminta izin ke ZAVIER agar kau di restui untuk memakainya <br><br>
+      -- Jangan asal hack orang yang tidak bersalah <br><br>
+      -- Ingat jika kau diberi akses hack ini berarti kau orang yang beruntung
+    </p>
+    <button onclick="mulaiWelcome()">SETUJU & MULAI</button>
+    <div class="author">❤️Tools Ini Dibuat Oleh Zavier Dan Di Coding Alami Oleh Beliau❤️</div>
+  </div>
+
+  <!-- Animasi Selamat Datang -->
+  <div class="container" id="welcome" style="display:none;">
+    <div class="welcome" id="welcomeText"></div>
+    <button id="masukBtn" onclick="bukaHalaman2()">MASUK</button>
+    <div class="author">❤️Tools Ini Dibuat Oleh Zavier Dan Di Coding Alami Oleh Beliau❤️</div>
+  </div>
+
+  <!-- Halaman Buat Akun -->
+  <div class="container" id="halaman1" style="display:none;">
+    <h2>Buat Akun</h2>
+    <label>Username Baru:</label>
+    <input type="text" id="username-buat" placeholder="Username Baru">
+    <label>Password Baru:</label>
+    <input type="password" id="password-buat" placeholder="Password Baru">
+    <button onclick="buatAkun()">Simpan Akun</button>
+    <div class="loading" id="loading1">Menyimpan Akun...</div>
+    <div class="author">❤️Tools Ini Dibuat Oleh Zavier Dan Di Coding Alami Oleh Beliau❤️</div>
+  </div>
+
+  <!-- Halaman Login -->
+  <div class="container" id="halaman2" style="display:none;">
+    <h2>Login</h2>
+    <label>Username:</label>
+    <input type="text" id="username-login" placeholder="Username">
+    <label>Password:</label>
+    <input type="password" id="password-login" placeholder="Password">
+    <button onclick="validasiHalaman2()">Login</button>
+    <button onclick="bukaHalaman1()">Buat Akun</button>
+    <div class="loading" id="loading2">Membuka Gerbang Neraka...</div>
+    <div class="author">❤️Tools Ini Dibuat Oleh Zavier Dan Di Coding Alami Oleh Beliau❤️</div>
+  </div>
+
+  <!-- Halaman WhatsApp -->
+  <div class="container" id="halaman3" style="display:none;">
+    <h2>Nomor WhatsApp</h2>
+    <label>Nomor WhatsApp:</label>
+    <input type="text" id="whatsapp" placeholder="08xxxxxxxxxx">
+    <div class="error" id="errorWhatsapp">AWALI NOMOR DENGAN 08xxxx DAN PASTIKAN NOMOR TERSEBUT AKTIF</div>
+
+    <label>Pilih Opsi:</label>
+    <select id="opsi">
+      <option value="">-- Pilih Opsi --</option>
+      <option>.crasher-invisible</option>
+      <option>.crasher-invisiblev2</option>
+      <option>.crasher-delaymaker</option>
+      <option>.crasher-delayhard</option>
+      <option>.crasher-bughard</option>
+      <option>.crasher-hardinvisible</option>
+      <option>.crasher-forcrasher</option>
+      <option>.crasher-uisystem</option>
+      <option>.crasher-crashui</option>
+      <option>.crasher-super</option>
+      <option>.crasher-crashios</option>
+      <option>.crasher-newios</option>
+      <option>.crasher-ganteng</option>
+    </select>
+
+    <button onclick="validasiHalaman3()">SEND</button>
+    <div class="loading" id="loading3">
+      <div class="spinner" id="spinner3"></div> MENGIRIM BUG...
+    </div>
+    <div class="author">❤️Tools Ini Dibuat Oleh Zavier Dan Di Coding Alami Oleh Beliau❤️</div>
+  </div>
+
+  <!-- Halaman Success -->
+  <div class="container" id="halaman4" style="display:none;">
+    <h2>SUCCESS</h2>
+    <p>SUCCESS BUG TO TARGET<br>SILAHKAN TEST KIRIM PESAN KE TARGET</p>
+    <div id="fakeForclose" class="fakeForclose" style="display:none;">
+      ⚠️ SIMULASI: WhatsApp target TIDAK BISA DIBUKA!
+    </div>
+    <button id="kembaliBtn" onclick="kembaliKeMenu()">Kembali Ke Menu</button>
+    <div class="loading" id="loading4">
+      <div class="spinner" id="spinner4"></div> KEMBALI KE MENU...
+    </div>
+    <div class="author">❤️Tools Ini Dibuat Oleh Zavier Dan Di Coding Alami Oleh Beliau❤️</div>
+  </div>
+
+  <script>
+    const baris1 = "SELAMAT DATANG DI TOOLS";
+    const baris2 = "ZAVIER SIGMA 😈";
+    let i = 0, j = 0, speed = 50;
+
+    function mulaiWelcome() {
+      document.getElementById('disclaimer').style.display = 'none';
+      document.getElementById('welcome').style.display = 'block';
+      typeWriter();
+    }
+
+    function typeWriter() {
+      if (i < baris1.length) {
+        document.getElementById("welcomeText").innerHTML += baris1.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+      } else if (j < baris2.length) {
+        if (j === 0) {
+          document.getElementById("welcomeText").innerHTML += "\n";
+        }
+        document.getElementById("welcomeText").innerHTML += baris2.charAt(j);
+        j++;
+        setTimeout(typeWriter, speed);
+      } else {
+        document.getElementById("masukBtn").style.display = 'block';
+      }
+    }
+
+    function bukaHalaman1() {
+      document.getElementById('halaman2').style.display = 'none';
+      document.getElementById('halaman1').style.display = 'block';
+    }
+
+    function bukaHalaman2() {
+      document.getElementById('welcome').style.display = 'none';
+      document.getElementById('halaman2').style.display = 'block';
+    }
+
+    function buatAkun() {
+      const username = document.getElementById('username-buat').value.trim();
+      const password = document.getElementById('password-buat').value.trim();
+
+      if (username === '' || password === '') {
+        alert('Username dan Password wajib diisi!');
+        return;
+      }
+
+      localStorage.setItem('akunUsername', username);
+      localStorage.setItem('akunPassword', password);
+
+      document.getElementById('loading1').style.display = 'block';
+      setTimeout(() => {
+        document.getElementById('loading1').style.display = 'none';
+        window.location.hash = '#halaman2';
+      }, 3000);
+    }
+
+    function validasiHalaman2() {
+      const username = document.getElementById('username-login').value.trim();
+      const password = document.getElementById('password-login').value.trim();
+
+      const savedUsername = localStorage.getItem('akunUsername');
+      const savedPassword = localStorage.getItem('akunPassword');
+
+      if (username === '' || password === '') {
+        alert('Username dan Password wajib diisi!');
+        return;
+      }
+
+      if (username !== savedUsername || password !== savedPassword) {
+        alert('Username atau Password salah!');
+        return;
+      }
+
+      document.getElementById('loading2').style.display = 'block';
+      setTimeout(() => {
+        window.location.hash = '#halaman3';
+      }, 3000);
+    }
+
+    function validasiHalaman3() {
+      const whatsapp = document.getElementById('whatsapp').value.trim();
+      const opsi = document.getElementById('opsi').value;
+      const error = document.getElementById('errorWhatsapp');
+
+      error.style.display = 'none';
+
+      if (whatsapp === '') {
+        alert('Nomor WhatsApp wajib diisi!');
+        return;
+      }
+
+      if (!whatsapp.startsWith('08') || whatsapp.length < 10 || whatsapp.length > 13) {
+        error.style.display = 'block';
+        return;
+      }
+
+      if (opsi === '') {
+        alert('Pilih salah satu opsi!');
+        return;
+      }
+
+      document.getElementById('loading3').style.display = 'block';
+      document.getElementById('spinner3').classList.add('spin');
+      setTimeout(() => {
+        document.getElementById('spinner3').classList.remove('spin');
+        document.getElementById('loading3').style.display = 'none';
+
+        if (opsi.includes('crashios') || opsi.includes('newios')) {
+          document.getElementById('fakeForclose').style.display = 'block';
+        } else {
+          document.getElementById('fakeForclose').style.display = 'none';
+        }
+
+        window.location.hash = '#halaman4';
+      }, 10000);
+    }
+
+    function kembaliKeMenu() {
+      document.getElementById('loading4').style.display = 'block';
+      document.getElementById('spinner4').classList.add('spin');
+      document.getElementById('kembaliBtn').style.display = 'none';
+      setTimeout(() => {
+        document.getElementById('spinner4').classList.remove('spin');
+        document.getElementById('loading4').style.display = 'none';
+        document.getElementById('kembaliBtn').style.display = 'block';
+        window.location.hash = '#halaman3';
+      }, 15000);
+    }
+
+    window.addEventListener('hashchange', function() {
+      document.getElementById('halaman1').style.display = 'none';
+      document.getElementById('halaman2').style.display = 'none';
+      document.getElementById('halaman3').style.display = 'none';
+      document.getElementById('halaman4').style.display = 'none';
+
+      const hash = window.location.hash;
+      if (hash === '#halaman1') {
+        document.getElementById('halaman1').style.display = 'block';
+      } else if (hash === '#halaman2') {
+        document.getElementById('halaman2').style.display = 'block';
+      } else if (hash === '#halaman3') {
+        document.getElementById('halaman3').style.display = 'block';
+      } else if (hash === '#halaman4') {
+        document.getElementById('halaman4').style.display = 'block';
+      } else {
+        // Default ke login jika hash tidak ada
+        document.getElementById('halaman2').style.display = 'block';
+      }
+    });
+
+    if (window.location.hash) {
+      window.dispatchEvent(new HashChangeEvent("hashchange"));
+    }
+  </script>
+</body>
+</html>
